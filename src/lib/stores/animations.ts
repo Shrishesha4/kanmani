@@ -14,30 +14,33 @@ interface AnimationOptions {
 }
 
 export const createScrollAnimation = (
-	element: string,
-	options: AnimationOptions = {}
+    element: string,
+    options: AnimationOptions = {}
 ) => {
-	const defaults = {
-		y: 50,
-		opacity: 0,
-		duration: 0.8,
-		ease: 'power2.out',
-		start: 'top bottom-=100',
-		delay: 0
-	};
+    const defaults = {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        start: 'top bottom-=50',
+        end: 'bottom top+=50',
+        delay: 0
+    };
 
-	const settings = { ...defaults, ...options };
+    const settings = { ...defaults, ...options };
 
-	if (typeof window !== 'undefined') {
-		gsap.registerPlugin(ScrollTrigger);
-		
-		return gsap.from(element, {
-			scrollTrigger: {
-				trigger: element,
-				start: settings.start,
-				toggleActions: 'restart pause reverse pause'
-			},
-			...settings
-		});
-	}
+    if (typeof window !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        return gsap.from(element, {
+            scrollTrigger: {
+                trigger: element,
+                start: settings.start,
+                end: settings.end,
+                toggleActions: 'play pause resume reset',
+                markers: false
+            },
+            ...settings
+        });
+    }
 };

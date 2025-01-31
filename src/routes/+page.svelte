@@ -6,8 +6,12 @@
 	import { onMount } from 'svelte';
 	import Lenis from '@studio-freight/lenis';
 	import Logout from '$lib/components/Logout.svelte';
+	import gsap from 'gsap/dist/gsap';
+	import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
 	onMount(() => {
+		gsap.registerPlugin(ScrollTrigger);
+		
 		const lenis = new Lenis({
 			duration: 1.2,
 			easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),

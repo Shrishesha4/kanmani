@@ -40,8 +40,20 @@
 </script>
 
 <!-- svelte-ignore element_invalid_self_closing_tag -->
-<section class="memories-section min-h-screen bg-yellow-50 py-20 snap-start snap-always">
-    <div class="container mx-auto px-4">
+<section class="memories-section relative min-h-screen bg-gradient-to-br from-yellow-50 to-pink-50 py-20 snap-start snap-always">
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="hearts-bg absolute inset-0 opacity-60">
+            {#each Array(40) as _, i}
+                <i 
+                    class="fa-solid fa-heart absolute text-pink-400" 
+                    style="left: {Math.random() * 100}%; top: {Math.random() * 100}%; font-size: {12 + Math.random() * 20}px; animation: pulse {2 + Math.random() * 4}s infinite {Math.random() * 2}s;"
+                ></i>
+            {/each}
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent backdrop-blur-[1px]"></div>
+    </div>
+
+    <div class="container relative mx-auto px-4">
         <h2 class="memories-heading mb-16 text-center text-4xl font-bold text-pink-600">Our Special Moments</h2>
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {#each memories as memory, i}
@@ -67,3 +79,20 @@
         </div>
     </div>
 </section>
+
+<style>
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.4;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+    }
+
+    .hearts-bg {
+        filter: blur(1.5px);
+    }
+</style>
