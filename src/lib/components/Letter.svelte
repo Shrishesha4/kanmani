@@ -2,13 +2,13 @@
 	import { onMount } from 'svelte';
 	import gsap from 'gsap/dist/gsap';
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger';
-	import SplitType from 'split-type';
+	import { letter } from '$lib/stores/content';
 
 	onMount(() => {
 		gsap.registerPlugin(ScrollTrigger);
 		
 		const title = document.querySelector<HTMLElement>('.letter-heading');
-		const letterText = document.querySelectorAll<HTMLElement>('.animate-text');
+		const paragraphs = gsap.utils.toArray<HTMLElement>('.animate-text');
 
 		if (title) {
 			gsap.from(title, {
@@ -23,53 +23,68 @@
 			});
 		}
 
-		letterText.forEach(text => {
-			const splitText = new SplitType(text as HTMLElement, { types: 'chars' });
+		paragraphs.forEach((para, index) => {
+			const words = para.textContent?.split(' ') || [];
+			para.textContent = '';
 			
-			gsap.from(splitText.chars, {
+			words.forEach((word) => {
+				const span = document.createElement('span');
+				span.textContent = word + ' ';
+				span.style.display = 'inline-block';
+				span.className = 'word-span';
+				para.appendChild(span);
+			});
+
+			gsap.from(para.children, {
 				scrollTrigger: {
-					trigger: text,
+					trigger: para,
 					start: 'top bottom-=50',
 					toggleActions: 'restart pause reverse pause'
 				},
 				opacity: 0,
-				y: 20,
-				stagger: 0.02,
-				duration: 0.6,
-				ease: 'power4.out'
+				x: -20,
+				duration: 1.5,
+				stagger: {
+					each: 0.05,
+					from: "start"
+				},
+				ease: 'power2.out',
+                delay: index === paragraphs.length - 1 ? 7.0 : 0
 			});
 		});
 	});
 </script>
 
-<section class="letter-section relative min-h-screen bg-gradient-to-br from-pink-50 to-blue-50 py-20 snap-start snap-always">
-	<div class="absolute inset-0 overflow-hidden">
-		<div class="hearts-bg absolute inset-0 opacity-10">
-			{#each Array(20) as _, i}
-				<i class="fa-solid fa-heart absolute text-pink-300" style="left: {Math.random() * 100}%; top: {Math.random() * 100}%; font-size: {8 + Math.random() * 16}px; animation: pulse {2 + Math.random() * 3}s infinite;"></i>
-			{/each}
-		</div>
-	</div>
+<section class="letter-section relative min-h-screen bg-gradient-to-br from-pink-100 to-blue-100 py-20 snap-start snap-always backdrop-blur-md">
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="hearts-bg absolute inset-0 opacity-40">
+            {#each Array(40) as _, i}
+                <i 
+                    class="fa-solid fa-heart absolute text-pink-400" 
+                    style="left: {Math.random() * 100}%; top: {Math.random() * 100}%; font-size: {12 + Math.random() * 20}px; animation: pulse {2 + Math.random() * 4}s infinite {Math.random() * 2}s;"
+                ></i>
+            {/each}
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent backdrop-blur-[2px]"></div>
+    </div>
 
 	<div class="container relative mx-auto px-4">
 		<h2 class="letter-heading mb-16 text-center text-4xl font-bold text-pink-600">My Heart to Yours</h2>
 		<div class="letter-content mx-auto max-w-2xl rounded-lg bg-white/80 p-8 shadow-xl backdrop-blur-sm">
 			<div class="prose prose-lg prose-pink mx-auto">
 				<p class="animate-text first-letter:float-left first-letter:mr-3 first-letter:text-5xl first-letter:font-serif first-letter:font-bold first-letter:text-pink-500">
-					My dearest Kanmani,
+					{letter.to},
 				</p>
 				<p class="animate-text mb-4">
-					As I write this letter, my heart overflows with the countless memories we've created together. Each moment with you feels like a beautiful dream come true, and I find myself falling more in love with you every single day.
-                    <br>Your smile brightens my darkest days, and your love gives me the strength to face any challenge. You're not just my partner; you're my best friend, my confidante, and my greatest blessing.
-                    <br>I promise to cherish every moment with you, to hold your hand through life's ups and downs, and to love you more with each passing day. You make my world complete, and I'm incredibly grateful to have you in my life.
+					{letter.para}
 				</p>
 				<p class="animate-text mb-4">
 				</p>
 				<p class="animate-text mb-4">
 				</p>
 				<p class="animate-text text-right font-serif text-lg">
-					Forever yours,<br />
-					<span class="mt-2 block text-xl font-semibold text-pink-600">Shri</span>
+					Forever yours, <br/>
+					<span class="mt-6 block text-3xl font-bold text-pink-600 tracking-wide">Shrishesha</span>
 				</p>
 			</div>
 		</div>
@@ -77,18 +92,31 @@
 </section>
 
 <style>
-	@keyframes pulse {
-		0%, 100% {
-			transform: scale(1);
-			opacity: 0.3;
-		}
-		50% {
-			transform: scale(1.2);
-			opacity: 0.6;
-		}
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.4;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+    }
+
+
+	:global(.word-span) {
+		display: inline-block;
+		padding: 0 2px;
+		transform-style: preserve-3d;
+		backface-visibility: hidden;
+		color: rgb(98, 75, 0);
 	}
 
-	.hearts-bg {
-		filter: blur(1px);
+	.letter-content {
+		perspective: 1000px;
 	}
+
+    .hearts-bg {
+        filter: blur(1.5px);
+    }
 </style>
