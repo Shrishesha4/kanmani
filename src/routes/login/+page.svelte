@@ -36,7 +36,7 @@
                 }
             });
         } else {
-            error = 'Maybe next time... 💔';
+            error = 'Please Say Yes! 🥹';
         }
     }
 
@@ -73,6 +73,7 @@
         if (password === correctPassword) {
             if (isBeforeValentines()) {
                 error = 'Please wait until Valentine\'s Day to view the content 💝';
+				goto('/wait')
                 return;
             }
             gsap.to('.login-card', {
@@ -158,7 +159,7 @@
                     placeholder="Enter the secret code..."
                 />
                 {#if error}
-					{goto('/wait')}
+                    <p class="mt-4 text-center text-sm text-pink-600">{error}</p>
                 {/if}
                 <button
                     type="submit"
