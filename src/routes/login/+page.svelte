@@ -74,6 +74,9 @@
         "Hint: Think Hard 💭",
         "Hint: Think Harder, but very easy guess!🤔",
         "Hint: Something you know already 💬",
+        "Hint: It's closer than you think! 💫",
+        "Hint: It was in my mac!💫",
+        "Hint: The answer is in your heart 💝",
     ];
 
     let lastHintIndex = -1;
