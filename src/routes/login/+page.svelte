@@ -3,6 +3,7 @@
     import { onMount } from 'svelte';
     import gsap from 'gsap/dist/gsap';
     import { browser } from '$app/environment';
+    import { check_date } from '$lib/stores/valentine';
 
     let showPassword = false;
     let password = '';
@@ -12,8 +13,8 @@
 
     function isBeforeValentines(): boolean {
         if (!browser) return true;
-        const now = new Date();
-        const valentinesDay = new Date('2024-02-14T00:00:00');
+        const now = new Date().getTime();
+        const valentinesDay = new Date(check_date).getTime();
         return now < valentinesDay;
     }
 

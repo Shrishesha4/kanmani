@@ -3,6 +3,7 @@
     import gsap from 'gsap/dist/gsap';
     import { browser } from '$app/environment';
     import { logout } from '$lib/utils/logout';
+    import { check_date } from '$lib/stores/valentine';
 
     onMount(() => {
         if (browser) {
@@ -34,14 +35,15 @@
         </div>
 
         <p class="mt-4 text-lg text-pink-400">
-            {new Date('2024-02-14T00:00').toLocaleDateString('en-GB', {
+            {new Date(check_date).toLocaleDateString('en-GB', {
                 day: '2-digit',
                 month: '2-digit',
                 year: '2-digit'
             })}
             <br />
-            {new Date('2024-02-14T00:00').toLocaleTimeString('en-US', {
+            {new Date(check_date).toLocaleTimeString('en-US', {
                 hour: 'numeric',
+                minute: '2-digit',
                 hour12: true
             })}
         </p>

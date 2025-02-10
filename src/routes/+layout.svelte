@@ -9,8 +9,8 @@
 
     onMount(() => {
         if (browser) {
-            valentineAccess.check();
-            if (!$valentineAccess) {
+            const hasAccess = valentineAccess.check();
+            if (!hasAccess) {
                 if (isAuthenticated() && $page.url.pathname !== '/wait') {
                     goto('/wait');
                 } else if (!isAuthenticated() && $page.url.pathname !== '/login') {
@@ -21,12 +21,8 @@
         }
     });
 
-    $: if (browser && !$valentineAccess) {
-        if (isAuthenticated() && $page.url.pathname !== '/wait') {
-            goto('/wait');
-        } else if (!isAuthenticated() && $page.url.pathname !== '/login') {
-            goto('/login');
-        }
+    $: if (browser) {
+        valentineAccess.check();
     }
 </script>
 
