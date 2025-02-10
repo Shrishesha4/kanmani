@@ -4,12 +4,12 @@
     import gsap from 'gsap/dist/gsap';
     import { browser } from '$app/environment';
     import { check_date } from '$lib/stores/valentine';
+	import { correctPassword } from '$lib/utils/auth';
 
     let showPassword = false;
     let password = '';
     let error = '';
     let loginCard: HTMLElement;
-    const correctPassword = 'ok';
 
     function isBeforeValentines(): boolean {
         if (!browser) return true;
