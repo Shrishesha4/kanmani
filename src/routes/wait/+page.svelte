@@ -28,7 +28,8 @@
 
     <div class="message-container text-center">
         <h1 class="mb-8 text-4xl font-bold text-pink-600">Munthiri Kotta</h1>
-        <p class="mb-2 text-xl text-pink-500">This special message will be available on Valentine's Day 💝</p>
+        <p class="mb-2 text-xl text-pink-500">Wait till Valentine's Day 💝</p>
+        <p class="mb-2 text-xl text-pink-500">Hehe 😁</p>
         
         <div class="mt-2">
             <i class="fa-solid fa-heart animate-pulse text-6xl text-pink-500"></i>

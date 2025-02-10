@@ -158,7 +158,7 @@
                     placeholder="Enter the secret code..."
                 />
                 {#if error}
-                    <p class="text-sm text-pink-600 text-center">{error}</p>
+					{goto('/wait')}
                 {/if}
                 <button
                     type="submit"
