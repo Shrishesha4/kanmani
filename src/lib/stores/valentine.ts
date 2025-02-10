@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-export const check_date = '2025-02-10T18:15:00';
+export const check_date = '2025-02-14T00:00:00';
 
 function createValentineStore() {
     const { subscribe, set } = writable(false);
