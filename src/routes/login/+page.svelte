@@ -69,6 +69,25 @@
             });
     }
 
+    const hints = [
+        "Hint: You know it! 😊",
+        "Hint: Think Hard 💭",
+        "Hint: Think Harder, but very easy guess!🤔",
+        "Hint: Something you know already 💬",
+    ];
+
+    let lastHintIndex = -1;
+
+    function getRandomHint(): string {
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * hints.length);
+        } while (newIndex === lastHintIndex);
+        
+        lastHintIndex = newIndex;
+        return hints[newIndex];
+    }
+
     function handleSubmit() {
         if (password === correctPassword) {
             if (isBeforeValentines()) {
@@ -87,7 +106,7 @@
                 }
             });
         } else {
-            error = 'Incorrect password. Please try again.';
+            error = `${getRandomHint()}\nTry again!`;
             password = '';
             shakeAnimation();
         }
